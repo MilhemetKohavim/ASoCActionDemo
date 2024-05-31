@@ -10,6 +10,8 @@ name: HCL AppScan CodeSweep Github Action
 
 
 on: [pull_request]
+  # Allows you to run this workflow manually from the Actions tab
+             #workflow_dispatch:
 
 jobs:
   scan:
