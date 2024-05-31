@@ -71,7 +71,7 @@ jobs:
           # TODO: appscan-config.xml is required for this to run. 
           # TODO: Make sure to add and <Exlcude>saclientutil</Exclude> statement to prevent SAClientUtil from being scanned
           $env:ASoC_IRX_Config_file = "appscan-config.xml"
-          $bearer_token =''
+          $bearer_token ='6wjGUYB-em2qJswCiUs96oPRUuIj9NXy'
           
           # ASoC - Login to ASoC with API Key and Secret
           $jsonBody = "
