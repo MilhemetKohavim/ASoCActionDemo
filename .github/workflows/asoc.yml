@@ -9,7 +9,7 @@
 # 
 # Search for 'TODO' to see where updates are required
 
-name: HCL ASoC SAST Workflow
+name: victoria's HCL ASoC SAST Workflow
 
 # Controls when the action will run. 
 on:
@@ -51,17 +51,17 @@ jobs:
       #   run: dotnet.exe publish -c Release -r win-x64
       
       # Runs AppScan Step
-      - name: Perform HCL AppScan Security Analysis
+      - name: victoria's Perform HCL AppScan Security Analysis
         env:
           # TODO: In ASoC, generate an ASoC key/secret
           # TODO: In GitHub > Settings > Secrets, Add ASOC_KEY and ASOC_SECRET variables
-          ASOC_KEY: ${{ secrets.ASOC_KEY }}
-          ASOC_SECRET: ${{ secrets.ASOC_SECRET }}
+          ASOC_KEY: 42f7da53-508d-12e9-16ec-98a58ff24423
+          ASOC_SECRET: UHvn5ZKq0NyG3+q2318i9iKeeU3lqAqVEHj52toZ+pyX
           TestVar: abcd
-          ASOC_SCAN_NAME: Automated Scan from Github Actions
+          ASOC_SCAN_NAME: VK Automated Scan from Github Actions
           # TODO: Update ASOC_APPID to reflect the ASoC application this scan is to be associated with
           # ASoC App: ASoCActionDemo
-          ASOC_APPID: f8f9e91b-708a-4d8f-b3f8-c9b4e6ac2b53
+          ASOC_APPID: ba4979e4-c3ea-4430-9345-7b78910a9134
           #ASOC_APPID: 19ac48c4-2aca-4b2d-b49c-139e6378a9e6
 
         run: |
@@ -105,7 +105,7 @@ jobs:
           # Comment out this lines for a proper .irx generation. This line is for demo purposes, it only downloads a sample .irx file that is not related to the source code in this repo
           # Invoke-WebRequest -Uri "https://cloud.appscan.com/api/V2/Tools/ScanDemoFiles/StaticAnalyzer" -OutFile "output.irx"
 
-          # ASoC - Upload the .irx file onto ASoC
+          # ASoC - VK Upload the .irx file onto ASoC
 
           $irx_file = [IO.File]::ReadAllBytes('output.irx')
           $params = @{
@@ -123,7 +123,7 @@ jobs:
           $upload_File_ID = $upload.FileId
           write-host "IRX Uploaded File ID: $upload_File_ID"
           
-          # ASoC - Execute a Static (SAST) Scan on ASoC by specifying the upload_File_ID
+          # ASoC - VK Execute a Static (SAST) Scan on ASoC by specifying the upload_File_ID
           
           $params = @{
             Uri         = "$baseURL/Scans/StaticAnalyzer"
@@ -148,7 +148,7 @@ jobs:
           Write-Host $output_runscan
           $scan_ID = $output_runscan.Id
           
-          # ASoC - Checking for scan completion status
+          # ASoC - VK Checking for scan completion status
           
           $params = @{
             Uri         = "$baseURL/Scans/$scan_ID/Executions"
