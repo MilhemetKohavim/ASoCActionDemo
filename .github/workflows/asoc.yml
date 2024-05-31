@@ -55,8 +55,13 @@ jobs:
         env:
           # TODO: In ASoC, generate an ASoC key/secret
           # TODO: In GitHub > Settings > Secrets, Add ASOC_KEY and ASOC_SECRET variables
-          ASOC_KEY: 42f7da53-508d-12e9-16ec-98a58ff24423
-          ASOC_SECRET: UHvn5ZKq0NyG3+q2318i9iKeeU3lqAqVEHj52toZ+pyX
+          #ASOC_KEY: 42f7da53-508d-12e9-16ec-98a58ff24423
+          #ASOC_SECRET: UHvn5ZKq0NyG3+q2318i9iKeeU3lqAqVEHj52toZ+pyX
+
+          ASOC_KEY: ${{ secrets.ASOC_KEY }}
+          ASOC_SECRET: ${{ secrets.ASOC_SECRET }}
+
+          
           TestVar: abcd
           ASOC_SCAN_NAME: VK Automated Scan from Github Actions
           # TODO: Update ASOC_APPID to reflect the ASoC application this scan is to be associated with
@@ -71,7 +76,7 @@ jobs:
           # TODO: appscan-config.xml is required for this to run. 
           # TODO: Make sure to add and <Exlcude>saclientutil</Exclude> statement to prevent SAClientUtil from being scanned
           $env:ASoC_IRX_Config_file = "appscan-config.xml"
-          $bearer_token ='6wjGUYB-em2qJswCiUs96oPRUuIj9NXy'
+          $bearer_token =''
           
           # ASoC - Login to ASoC with API Key and Secret
           $jsonBody = "
@@ -90,12 +95,12 @@ jobs:
           }
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls -bor [Net.SecurityProtocolType]::Tls11 -bor [Net.SecurityProtocolType]::Tls12
           $Members = Invoke-RestMethod @params
-          Write-Host "Auth successful - Token received: $Members.token"
+          Write-Host "vika1 Auth successful - Token received: $Members.token"
           $bearer_token = $Members.token
           $ProgressPreference = 'SilentlyContinue'
           
           # ASoC -  Download the latest version of SAClientUtil to generate the .irx in preparation for the scan
-          Write-Host "Downloading latest verion of SAClientUtil..."
+          Write-Host "vika2 Downloading latest verion of SAClientUtil..."
           Invoke-WebRequest -Uri "https://cloud.appscan.com/api/Local/StaticAnalyzer/ARSATool" -OutFile "saclientutil.zip"
           Expand-Archive -Path "saclientutil.zip" -DestinationPath "saclientutil"
           $SAClientUtilFolder = Get-ChildItem -Path .\saclientutil
@@ -103,7 +108,7 @@ jobs:
           & $command prepare -c $env:ASoC_IRX_Config_file -n output.irx
           
           # Comment out this lines for a proper .irx generation. This line is for demo purposes, it only downloads a sample .irx file that is not related to the source code in this repo
-          # Invoke-WebRequest -Uri "https://cloud.appscan.com/api/V2/Tools/ScanDemoFiles/StaticAnalyzer" -OutFile "output.irx"
+          Invoke-WebRequest -Uri "https://cloud.appscan.com/api/V2/Tools/ScanDemoFiles/StaticAnalyzer" -OutFile "output.irx"
 
           # ASoC - VK Upload the .irx file onto ASoC
 
@@ -121,7 +126,7 @@ jobs:
           }
           $upload = Invoke-RestMethod @params
           $upload_File_ID = $upload.FileId
-          write-host "IRX Uploaded File ID: $upload_File_ID"
+          write-host "vika3 IRX Uploaded File ID: $upload_File_ID"
           
           # ASoC - VK Execute a Static (SAST) Scan on ASoC by specifying the upload_File_ID
           
@@ -144,8 +149,8 @@ jobs:
              'Personal' = "false"
           }
           $output_runscan = Invoke-RestMethod @params -Body ($body|ConvertTo-JSON)
-          write-host "Scan executed"
-          Write-Host $output_runscan
+          write-host "vika4 Scan executed"
+          Write-Host "vika4 output-runscan: $output_runscan"
           $scan_ID = $output_runscan.Id
           
           # ASoC - VK Checking for scan completion status
@@ -163,7 +168,7 @@ jobs:
             $output = Invoke-RestMethod @params
             $scan_status = $output.Status
             Start-Sleep -Seconds 10
-            Write-Host "Waiting for Scan Completion..."
+            Write-Host "vika5 Waiting for Scan Completion..."
           }
           
           # ASoC - Generate a HTML report on the completed scan by specifying the scan_ID
@@ -210,7 +215,7 @@ jobs:
             $output = Invoke-RestMethod @params
             $report_status = $output.Status
             Start-Sleep -Seconds 5
-            Write-Host "Generating Report... Progress: " $output.Progress "%"
+            Write-Host "vika6 Generating Report... Progress: " $output.Progress "%"
           }
           #Download Report
           $params = @{
@@ -268,7 +273,7 @@ jobs:
             $output = Invoke-RestMethod @params
             $report_status = $output.Status
             Start-Sleep -Seconds 5
-            Write-Host "Generating XML Report... Progress: " $output.Progress "%"
+            Write-Host "vika7 Generating XML Report... Progress: " $output.Progress "%"
           }
           #Download Report
           $params = @{
