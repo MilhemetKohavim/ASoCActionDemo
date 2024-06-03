@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Configuration>
   <Targets>
-    <Target path="c:\temp\">
+    <Target path="C:\Users\A-1289067\.appscan\temp">
       <Exclude>saclientutil/</Exclude>
     </Target>
   </Targets>
