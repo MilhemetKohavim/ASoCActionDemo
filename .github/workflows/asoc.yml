@@ -9,7 +9,7 @@
 # 
 # Search for 'TODO' to see where updates are required
 
-name: victoria's HCL ASoC SAST Workflow
+name: Victoria's HCL ASoC SAST Workflow
 
 # Controls when the action will run. 
 on:
@@ -51,7 +51,7 @@ jobs:
       #   run: dotnet.exe publish -c Release -r win-x64
       
       # Runs AppScan Step
-      - name: victoria's Perform HCL AppScan Security Analysis
+      - name: Victoria's Perform HCL AppScan Security Analysis
         env:
           # TODO: In ASoC, generate an ASoC key/secret
           # TODO: In GitHub > Settings > Secrets, Add ASOC_KEY and ASOC_SECRET variables
@@ -63,7 +63,7 @@ jobs:
 
           
           TestVar: abcd
-          ASOC_SCAN_NAME: VK Automated Scan from Github Actions
+          ASOC_SCAN_NAME: Victoria  Automated Scan from Github Actions
           # TODO: Update ASOC_APPID to reflect the ASoC application this scan is to be associated with
           # ASoC App: ASoCActionDemo
           ASOC_APPID: ba4979e4-c3ea-4430-9345-7b78910a9134
@@ -95,12 +95,12 @@ jobs:
           }
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls -bor [Net.SecurityProtocolType]::Tls11 -bor [Net.SecurityProtocolType]::Tls12
           $Members = Invoke-RestMethod @params
-          Write-Host "vika1 Auth successful - Token received: $Members.token"
+          Write-Host "Victoria's Auth successful - Token received: $Members.token"
           $bearer_token = $Members.token
           $ProgressPreference = 'SilentlyContinue'
           
           # ASoC -  Download the latest version of SAClientUtil to generate the .irx in preparation for the scan
-          Write-Host "vika2 Downloading latest verion of SAClientUtil..."
+          Write-Host "Victoria's Downloading latest verion of SAClientUtil..."
           Invoke-WebRequest -Uri "https://cloud.appscan.com/api/Local/StaticAnalyzer/ARSATool" -OutFile "saclientutil.zip"
           Expand-Archive -Path "saclientutil.zip" -DestinationPath "saclientutil"
           $SAClientUtilFolder = Get-ChildItem -Path .\saclientutil
@@ -110,7 +110,7 @@ jobs:
           # Comment out this lines for a proper .irx generation. This line is for demo purposes, it only downloads a sample .irx file that is not related to the source code in this repo
           Invoke-WebRequest -Uri "https://cloud.appscan.com/api/V2/Tools/ScanDemoFiles/StaticAnalyzer" -OutFile "output.irx"
 
-          # ASoC - VK Upload the .irx file onto ASoC
+          # ASoC - Victoria's Upload the .irx file onto ASoC
 
           $irx_file = [IO.File]::ReadAllBytes('output.irx')
           $params = @{
@@ -128,7 +128,7 @@ jobs:
           $upload_File_ID = $upload.FileId
           write-host "vika3 IRX Uploaded File ID: $upload_File_ID"
           
-          # ASoC - VK Execute a Static (SAST) Scan on ASoC by specifying the upload_File_ID
+          # ASoC - Victoria's Execute a Static (SAST) Scan on ASoC by specifying the upload_File_ID
           
           $params = @{
             Uri         = "$baseURL/Scans/StaticAnalyzer"
@@ -153,7 +153,7 @@ jobs:
           Write-Host "vika4 output-runscan: $output_runscan"
           $scan_ID = $output_runscan.Id
           
-          # ASoC - VK Checking for scan completion status
+          # ASoC - Victoria's Checking for scan completion status
           
           $params = @{
             Uri         = "$baseURL/Scans/$scan_ID/Executions"
@@ -229,7 +229,7 @@ jobs:
           $output_runreport = Invoke-RestMethod @params
           Out-File -InputObject $output_runreport -FilePath .\AppScan_Security_Report.html
           
-          # ASoC - Generate an XML report on the completed scan by specifying the scan_ID
+          # Victoria's ASoC - Generate an XML report on the completed scan by specifying the scan_ID
           
           $params = @{
             Uri         = "$baseURL/Reports/Security/Scan/$scan_ID"
@@ -275,7 +275,7 @@ jobs:
             Start-Sleep -Seconds 5
             Write-Host "vika7 Generating XML Report... Progress: " $output.Progress "%"
           }
-          #Download Report
+          #Victoria's Download Report
           $params = @{
             Uri         = "$baseURL/Reports/Download/$report_ID"
             Method      = 'Get'
