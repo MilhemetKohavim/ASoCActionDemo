@@ -106,9 +106,11 @@ jobs:
           $SAClientUtilFolder = "C:\Users\A-1289067\.appscan\SAClientUtil.8.0.1570"
           #Get-ChildItem -Path .\saclientutil
           Write-Host " 1## SAClientUtilFolder::::::::::::::$SAClientUtilFolder"
+          
           $command =  $SAClientUtilFolder.name + "\bin\appscan.bat"
-          & $command prepare -c $env:ASoC_IRX_Config_file -n output.irx
           Write-Host " 2## command:::::::::: $command"
+          & $command prepare -c $env:ASoC_IRX_Config_file -n output.irx
+          
           # Comment out this lines for a proper .irx generation. This line is for demo purposes, it only downloads a sample .irx file that is not related to the source code in this repo
           Invoke-WebRequest -Uri "https://cloud.appscan.com/api/V2/Tools/ScanDemoFiles/StaticAnalyzer" -OutFile "output.irx"
 
