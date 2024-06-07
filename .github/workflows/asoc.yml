@@ -95,7 +95,7 @@ jobs:
           }
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls -bor [Net.SecurityProtocolType]::Tls11 -bor [Net.SecurityProtocolType]::Tls12
           $Members = Invoke-RestMethod @params
-          Write-Host "Victoria's Auth successful - Token received: $Members.token"
+          Write-Host "Victoria's Auth successful - Token received:::::: $Members.token  APP ID:::::::::: $env:ASOC_APPID KEY::::::: $env:ASOC_KEY SECRET:::::::: $env:ASOC_SECRET"
           $bearer_token = $Members.token
           $ProgressPreference = 'SilentlyContinue'
           
@@ -104,9 +104,10 @@ jobs:
           Invoke-WebRequest -Uri "https://cloud.appscan.com/api/Local/StaticAnalyzer/ARSATool" -OutFile "saclientutil.zip"
           Expand-Archive -Path "saclientutil.zip" -DestinationPath "saclientutil"
           $SAClientUtilFolder = Get-ChildItem -Path .\saclientutil
+          Write-Host " SAClientUtilFolder::::::::::::::$SAClientUtilFolder"
           $command = ".\saclientutil\" + $SAClientUtilFolder.name + "\bin\appscan.bat"
           & $command prepare -c $env:ASoC_IRX_Config_file -n output.irx
-          
+           Write-Host " command:::::::::: $command"
           # Comment out this lines for a proper .irx generation. This line is for demo purposes, it only downloads a sample .irx file that is not related to the source code in this repo
           Invoke-WebRequest -Uri "https://cloud.appscan.com/api/V2/Tools/ScanDemoFiles/StaticAnalyzer" -OutFile "output.irx"
 
@@ -149,7 +150,7 @@ jobs:
              'Personal' = "false"
           }
           $output_runscan = Invoke-RestMethod @params -Body ($body|ConvertTo-JSON)
-          write-host "Scan executed"
+          write-host "Scan executed!!!!!!!!!!!!!!!!"
           Write-Host " output-runscan: $output_runscan"
           $scan_ID = $output_runscan.Id
           
