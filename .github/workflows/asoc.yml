@@ -103,7 +103,8 @@ jobs:
           Write-Host " Downloading latest verion of SAClientUtil..."
           Invoke-WebRequest -Uri "https://cloud.appscan.com/api/Local/StaticAnalyzer/ARSATool" -OutFile "saclientutil.zip"
           Expand-Archive -Path "saclientutil.zip" -DestinationPath "saclientutil"
-          $SAClientUtilFolder = Get-ChildItem -Path .\saclientutil
+          $SAClientUtilFolder = "C:\Users\A-1289067\.appscan\saclientutil"
+          #Get-ChildItem -Path .\saclientutil
           Write-Host " SAClientUtilFolder::::::::::::::$SAClientUtilFolder"
           $command = ".\saclientutil\" + $SAClientUtilFolder.name + "\bin\appscan.bat"
           & $command prepare -c $env:ASoC_IRX_Config_file -n output.irx
