@@ -107,7 +107,7 @@ jobs:
           #Get-ChildItem -Path .\saclientutil
           Write-Host " 1## SAClientUtilFolder::::::::::::::$SAClientUtilFolder"
           
-          $command =  $SAClientUtilFolder.name + "\bin\appscan.bat"
+          $command =  "C:\Users\A-1289067\.appscan\SAClientUtil.8.0.1570\bin\appscan.bat"
           Write-Host " 2## command:::::::::: $command"
           & $command prepare -c $env:ASoC_IRX_Config_file -n output.irx
           
